@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Security Hardening: Whitelists form actions and data connections strictly to Formspree -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'unsafe-inline'; form-action https://formspree.io; connect-src https://formspree.io;">
     <title>Silver Eagle Group</title>
     <style>
@@ -59,10 +60,24 @@
         .about-section p {
             color: var(--text-muted);
             font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+        .about-section p:last-child {
+            margin-bottom: 0;
         }
 
         .form-group { margin-bottom: 16px; }
-        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; color: var(--text-main); }
+        
+        /* Form Field Helper Comment Styling */
+        .field-comment {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
         input[type="email"] {
             width: 100%;
             padding: 12px;
@@ -95,20 +110,28 @@
 <body>
 
 <div class="container">
+    <!-- LOGO IMAGE ENTRY -->
     <div class="logo-container">
-        <img src="logo.jpg" alt="Silver Eagle Group Logo" style="max-width: 280px; width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px;">
+        <img src="logo.png" alt="Silver Eagle Group Logo" style="max-width: 280px; width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px;">
     </div>
 
+    <!-- GENERALIZED ABOUT SECTION -->
     <section class="about-section">
         <h2>About the Project</h2>
         <p>
             Silver Eagle Group is a forward-looking strategic entity focused on technology, security infrastructure, and corporate automation systems. We build and deploy modern operational frameworks that streamline organizational data management, enhance digital communication channels, and secure technical networks against emerging landscape risks.
         </p>
+        <p>
+            Our core architecture modules are currently undergoing initialization. We are expanding our digital landscape and building secure connection frameworks behind the scenes to optimize long-term operational performance.
+        </p>
     </section>
 
+    <!-- SECURE FORM INGESTION VIA FORMSPREE API -->
     <form id="secure-lead-form" action="https://formspree.io/f/xzdqdboq" method="POST">
         <div class="form-group">
             <label for="email">Email Address</label>
+            <!-- GENERALIZED INLINE COMMENT FIELD -->
+            <span class="field-comment">Submit your email address to register general corporate inquiries, secure contact priority, or receive technical entity status logs as operations scale.</span>
             <input type="email" id="email" name="email" required autocomplete="off" placeholder="name@domain.com">
         </div>
         <button type="submit" id="submit-btn">Secure Submit</button>
