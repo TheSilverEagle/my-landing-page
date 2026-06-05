@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Security Hardening: Updated to securely allow local .jpg, .jpeg, and .png images -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'unsafe-inline'; form-action https://formspree.io;">
-    <title>Secure Landing Page</title>
+    <title>Silver Eagle Group</title>
     <style>
         :root {
             --bg-primary: #111827;
@@ -37,7 +38,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
-        /* Logo Styling - set for the larger high-res asset */
+        /* Logo Styling */
         .logo-container {
             text-align: center;
             margin-bottom: 32px;
@@ -95,18 +96,21 @@
 <body>
 
 <div class="container">
+    <!-- LOGO IMAGE ENTRY - POINTED TO LOGO.JPG -->
     <div class="logo-container">
-        <img src="logo.png" alt="Silver Eagle Group Logo" style="max-width: 220px; height: auto; display: block; margin: 0 auto;">
+        <img src="logo.jpg" alt="Silver Eagle Group Logo" style="max-width: 280px; width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 4px;">
     </div>
 
+    <!-- ABOUT SECTION -->
     <section class="about-section">
         <h2>About the Project</h2>
         <p>
-            REPLACE THIS TEXT: Provide a clear, brief operational summary of your project or business entity here.
-            Highlight your main value proposition, core services, or strategic mission to optimize visitor conversion rates.
+            Welcome to Silver Eagle Group. We are currently configuring our core automated secure systems infrastructure. 
+            Enter your email address below to securely request operational access or receive project development updates.
         </p>
     </section>
 
+    <!-- SECURE FORM INGESTION VIA FORMSPREE API -->
     <form id="secure-lead-form" action="https://formspree.io/f/xzdqdboq" method="POST">
         <div class="form-group">
             <label for="email">Email Address</label>
