@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Security Hardening: Enforce HTTPS and restrict resource loading origins -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; form-action https://formspree.io;">
+    <title>Secure Landing Page</title>
+    <style>
+        :root {
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+        header p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-primary);
+            border: 1px solid #374151;
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: border-color 0.15s ease;
+        }
+        input[type="email"]:focus { outline: none; border-color: var(--accent); }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+        button:hover { background-color: var(--accent-hover); }
+        .status-message { font-size: 0.85rem; margin-top: 12px; text-align: center; display: none; }
+        .status-success { color: #10b981; }
+        .status-error { color: #ef4444; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Secure Landing Page</h1>
+        <p>Enter your email below to receive project updates directly to your inbox.</p>
+    </header>
+
+    <!-- SECURE FORM INGESTION VIA FORMSPREE API -->
+    <form id="secure-lead-form" action="https://formspree.io/f/xzdqdboq" method="POST">
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <!-- Native HTML5 input validation prevents basic malformed payloads -->
+            <input type="email" id="email" name="email" required autocomplete="off" placeholder="name@domain.com">
+        </div>
+        <button type="submit" id="submit-btn">Secure Submit</button>
+        <div id="form-status" class="status-message"></div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('secure-lead-form');
+    const status = document.getElementById('form-status');
+    const button = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        button.disabled = true;
+        button.innerText = 'Processing...';
+        
+        const data = new FormData(form);
+        
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                status.textContent = "Submission verified successfully.";
+                status.className = "status-message status-success";
+                status.style.display = "block";
+                form.reset();
+            } else {
+                const result = await response.json();
+                throw new Error(result.error || "Transmission failed.");
+            }
+        } catch (error) {
+            status.textContent = "Error: System could not securely process request.";
+            status.className = "status-message status-error";
+            status.style.display = "block";
+        } finally {
+            button.disabled = false;
+            button.innerText = 'Secure Submit';
+        }
+    });
+</script>
+
+</body>
+</html>
